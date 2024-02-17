@@ -14,6 +14,12 @@ function getNumberStudents() {
     return numberStudents;
 }
 
+function getNumberColumns(){
+    let table = getTable();
+    let numberColumns = table.rows[0].cells.length;
+    return numberColumns;
+}
+
 function avarageStudentsList() {
     let table = getTable();
     let numberOfRows = getNumberOfRows();
@@ -67,7 +73,7 @@ function checked() {
 
         let celulaOutputAvarage = table.rows[i].cells[6].querySelector('output');
         let celulaOutputSituation = table.rows[i].cells[7].querySelector('output');
-
+        
         celulaOutputAvarage.textContent = avarageStudents[i - 1];
         celulaOutputSituation.textContent = situationChecked;
 
@@ -116,4 +122,20 @@ function createStudent() {
         tableBody.appendChild(newRow);
     }
 
+}
+
+function createGrade(){
+
+    const newTH = document.createElement('th');
+    newTH.scope='col';
+
+    const newCol = document.createElement('td');
+    const newInput = document.createElement('input');
+    newInput.type='number';
+    newInput.className='form-control';
+    newCol.appendChild(newInput);
+    
+    let celulaOutputAvarage = table.rows[2].cells[6].querySelector('output');
+
+    celulaOutputAvarage.appendChild(newCol);
 }
