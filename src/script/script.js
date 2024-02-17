@@ -20,6 +20,12 @@ function getNumberColumns(){
     return numberColumns;
 }
 
+function countSemester(){
+    let numberColumns = getNumberColumns();
+    let countSemester = numberColumns-4;
+    console.log(countSemester);
+}
+
 function avarageStudentsList() {
     let table = getTable();
     let numberOfRows = getNumberOfRows();
@@ -125,9 +131,14 @@ function createStudent() {
 }
 
 function createGrade(){
+    let table = getTable();
+    let countSemester = countSemester();
 
     const newTH = document.createElement('th');
-    newTH.scope='col';
+    newTH.textContent(`${countSemester+1} Semester`);
+    newTH.setAttribute('scope', 'col');
+
+    table.querySelector('thead tr').appendChild(newTH);
 
     const newCol = document.createElement('td');
     const newInput = document.createElement('input');
