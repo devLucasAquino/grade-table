@@ -1,3 +1,5 @@
+let countSemesters = 4;
+
 function getTable() {
     let table = document.getElementById("table");
     return table;
@@ -14,29 +16,26 @@ function getNumberStudents() {
     return numberStudents;
 }
 
-function getNumberColumns() {
-    let table = getTable();
-    let numberColumns = table.rows[0].cells.length;
-    return numberColumns;
-}
 
 function avarageStudentsList() {
     let table = getTable();
     let numberOfRows = getNumberOfRows();
-    let countSemester = getNumberColumns()-4;
     let avarageStudents = [];
+    let columnsSemester = getNumberColumns()-4;
 
     for (var i = 1; i < numberOfRows; i++) {
         let gradeStudent = 0;
 
-        for (var j = 2; j < 6; j++) {
+        for (var n = 0; n < columnsSemester; n++) {
+            let j = 2;
+            
             let celulaInput = table.rows[i].cells[j].querySelector('input');
             let grade = celulaInput ? parseFloat(celulaInput.value) : 0;
 
             gradeStudent += grade;
+            j++
         }
-
-        avarageStudents.push(gradeStudent / countSemester);
+        avarageStudents.push(gradeStudent / countSemesters);
     }
 
     return avarageStudents;
@@ -72,8 +71,13 @@ function checked() {
             situationChecked = 'Recovery';
         }
 
-        let celulaOutputAvarage = table.rows[i].cells[6].querySelector('output');
-        let celulaOutputSituation = table.rows[i].cells[7].querySelector('output');
+        let numberOfCells = table.rows[i].cells.length;
+
+        let lastCellIndex = numberOfCells - 1;
+        let secondLastCellIndex = numberOfCells - 2
+
+        let celulaOutputAvarage = table.rows[i].cells[secondLastCellIndex].querySelector('output');
+        let celulaOutputSituation = table.rows[i].cells[lastCellIndex].querySelector('output');
 
         celulaOutputAvarage.textContent = avarageStudents[i - 1];
         celulaOutputSituation.textContent = situationChecked;
@@ -127,9 +131,11 @@ function createStudent() {
 
 }
 
+
 function createGrade() {
     let table = getTable();
-    let countSemester = getNumberColumns() - 4;
+    let countSemester = countSemesters;
+    countSemesters++;
 
     if (countSemester == 6) {
         window.alert('limite de nota atingido!');
@@ -156,6 +162,13 @@ function createGrade() {
             let insertBeforeCell = row.children[insertBeforeIndex];
             row.insertBefore(newCell, insertBeforeCell);
         }
+
     }
 
+}
+
+function getNumberColumns() {
+    let table = getTable();
+    let numberColumns = table.rows[0].cells.length;
+    return numberColumns;
 }
