@@ -14,21 +14,16 @@ function getNumberStudents() {
     return numberStudents;
 }
 
-function getNumberColumns(){
+function getNumberColumns() {
     let table = getTable();
     let numberColumns = table.rows[0].cells.length;
     return numberColumns;
 }
 
-function countSemester(){
-    let numberColumns = getNumberColumns();
-    let countSemester = numberColumns-4;
-    console.log(countSemester);
-}
-
 function avarageStudentsList() {
     let table = getTable();
     let numberOfRows = getNumberOfRows();
+    let countSemester = getNumberColumns()-4;
     let avarageStudents = [];
 
     for (var i = 1; i < numberOfRows; i++) {
@@ -41,7 +36,7 @@ function avarageStudentsList() {
             gradeStudent += grade;
         }
 
-        avarageStudents.push(gradeStudent / 4);
+        avarageStudents.push(gradeStudent / countSemester);
     }
 
     return avarageStudents;
@@ -79,7 +74,7 @@ function checked() {
 
         let celulaOutputAvarage = table.rows[i].cells[6].querySelector('output');
         let celulaOutputSituation = table.rows[i].cells[7].querySelector('output');
-        
+
         celulaOutputAvarage.textContent = avarageStudents[i - 1];
         celulaOutputSituation.textContent = situationChecked;
 
@@ -88,6 +83,7 @@ function checked() {
 }
 
 function createStudent() {
+    let countSemester = getNumberColumns() - 4;
 
     if (getNumberStudents() == 10) {
         window.alert('Limite de alunos alcançados')
@@ -108,13 +104,14 @@ function createStudent() {
         createCellName.appendChild(createInputName);
         newRow.appendChild(createCellName);
 
-        for (var i = 1; i <= 4; i++) {
+        for (var i = 1; i <= countSemester; i++) {
             const newCell = document.createElement('td');
             const newInput = document.createElement('input');
             newInput.type = 'number';
             newInput.className = 'form-control';
             newCell.appendChild(newInput);
             newRow.appendChild(newCell);
+
         }
 
         for (var i = 1; i <= 2; i++) {
@@ -130,23 +127,35 @@ function createStudent() {
 
 }
 
-function createGrade(){
+function createGrade() {
     let table = getTable();
-    let countSemester = countSemester();
+    let countSemester = getNumberColumns() - 4;
 
-    const newTH = document.createElement('th');
-    newTH.textContent(`${countSemester+1} Semester`);
-    newTH.setAttribute('scope', 'col');
+    if (countSemester == 6) {
+        window.alert('limite de nota atingido!');
+    } else {
 
-    table.querySelector('thead tr').appendChild(newTH);
+        const newTH = document.createElement('th');
+        const textHeader = document.createTextNode(`${countSemester + 1}º Semester`);
+        newTH.appendChild(textHeader);
+        newTH.setAttribute('scope', 'col');
 
-    const newCol = document.createElement('td');
-    const newInput = document.createElement('input');
-    newInput.type='number';
-    newInput.className='form-control';
-    newCol.appendChild(newInput);
-    
-    let celulaOutputAvarage = table.rows[2].cells[6].querySelector('output');
+        let headerRow = table.querySelector('thead tr');
+        let insertBeforeIndex = countSemester + 2;
+        headerRow.insertBefore(newTH, headerRow.children[insertBeforeIndex]);
 
-    celulaOutputAvarage.appendChild(newCol);
+
+        for (var i = 0; i < getNumberOfRows() - 1; i++) {
+            var newCell = document.createElement('td');
+            var newInput = document.createElement('input');
+            newInput.type = 'number';
+            newInput.className = 'form-control';
+            newCell.appendChild(newInput);
+
+            let row = table.rows[i + 1];
+            let insertBeforeCell = row.children[insertBeforeIndex];
+            row.insertBefore(newCell, insertBeforeCell);
+        }
+    }
+
 }
