@@ -21,26 +21,25 @@ function avarageStudentsList() {
     let table = getTable();
     let numberOfRows = getNumberOfRows();
     let avarageStudents = [];
-    let columnsSemester = getNumberColumns()-4;
+    let columnsSemester = getNumberColumns() - 4; // Isso deve ser ajustado para considerar o novo número de semestres
 
     for (var i = 1; i < numberOfRows; i++) {
         let gradeStudent = 0;
 
         for (var n = 0; n < columnsSemester; n++) {
-            let j = 2;
-            
+            let j = 2 + n; // Isso deve ser ajustado para considerar o novo número de semestres
+
             let celulaInput = table.rows[i].cells[j].querySelector('input');
             let grade = celulaInput ? parseFloat(celulaInput.value) : 0;
 
             gradeStudent += grade;
             j++
         }
-        avarageStudents.push(gradeStudent / countSemesters);
+        avarageStudents.push(gradeStudent / countSemesters); // Isso deve ser ajustado para usar o valor atualizado de countSemesters
     }
 
     return avarageStudents;
 }
-
 function classAvarage() {
     let numberStudents = getNumberStudents();
     let avarageStudents = avarageStudentsList();
@@ -79,7 +78,7 @@ function checked() {
         let celulaOutputAvarage = table.rows[i].cells[secondLastCellIndex].querySelector('output');
         let celulaOutputSituation = table.rows[i].cells[lastCellIndex].querySelector('output');
 
-        celulaOutputAvarage.textContent = avarageStudents[i - 1];
+        celulaOutputAvarage.textContent = avarageStudents[i - 1].toFixed(2);
         celulaOutputSituation.textContent = situationChecked;
 
     }
@@ -130,7 +129,6 @@ function createStudent() {
     }
 
 }
-
 
 function createGrade() {
     let table = getTable();
