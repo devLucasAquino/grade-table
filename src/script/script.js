@@ -40,6 +40,7 @@ function avarageStudentsList() {
 
     return avarageStudents;
 }
+
 function classAvarage() {
     let numberStudents = getNumberStudents();
     let avarageStudents = avarageStudentsList();
@@ -49,7 +50,9 @@ function classAvarage() {
         classAvarage += avarageStudents[i];
     }
 
-    return classAvarage / numberStudents;
+    let classAvarageText =  classAvarage / numberStudents.toFixed(2);
+    document.getElementById('button-class-avarage').innerText = 'Class Avarage: ' + classAvarageText; 
+
 }
 
 function checked() {
@@ -62,12 +65,16 @@ function checked() {
     for (var i = 1; i < numberOfRows; i++) {
         if (avarageStudents[i - 1] > 6) {
             situationChecked = 'Approved';
+            color = "green";
         }
         else if (avarageStudents[i - 1] < 5) {
             situationChecked = 'Disapproved';
+            color = "red";
+
         }
         else {
             situationChecked = 'Recovery';
+            color = "yellow";
         }
 
         let numberOfCells = table.rows[i].cells.length;
@@ -76,11 +83,12 @@ function checked() {
         let secondLastCellIndex = numberOfCells - 2
 
         let celulaOutputAvarage = table.rows[i].cells[secondLastCellIndex].querySelector('output');
-        let celulaOutputSituation = table.rows[i].cells[lastCellIndex].querySelector('output');
+        let celulaOutputSituation = table.rows[i].cells[lastCellIndex].querySelector('output')
 
         celulaOutputAvarage.textContent = avarageStudents[i - 1].toFixed(2);
         celulaOutputSituation.textContent = situationChecked;
 
+        celulaOutputSituation.style.background = color;
     }
 
 }
@@ -170,3 +178,21 @@ function getNumberColumns() {
     let numberColumns = table.rows[0].cells.length;
     return numberColumns;
 }
+
+document.getElementById('optionOrder').addEventListener('change', function(){
+    let numberOfRows = getNumberOfRows();
+    let table = getTable();
+    var nameStudentsList = [];
+
+    for(let i = 1; i < numberOfRows; i++){
+        let celulaNameStudents = table.rows[i].cells[1].textContent;
+        nameStudentsList.push(celulaNameStudents);
+    }
+
+    nameStudentsList.sort(function(a, b) {
+     return a.localeCompare(b);
+    });
+    
+    console.log(nameStudentsList);
+
+})

@@ -9,6 +9,12 @@
 </head>
 
 <body>
+    <select name="optionOrder" id="optionOrder">
+        <option value=""></option>
+        <option value="1">Ordem Alfabética</option>
+        <option value="2">Média Crescente</option>
+
+    </select>
     <table class="table" id="table">
         <thead>
 
@@ -51,6 +57,7 @@
 
     </table>
 
+    <button type="button" id="button-class-avarage" onclick="classAvarage()">Class Avarage</button><br><br>
     <button type="button" id="button-verify-avarage" onclick="checked()">Check</button>
     <button type="button" id="button-create-student" onclick="createStudent()">NewStudent</button>
     <button type="button" id="button-create-grade" onclick="createGrade()">newGrade</button>
