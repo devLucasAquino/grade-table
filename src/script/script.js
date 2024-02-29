@@ -21,13 +21,13 @@ function avarageStudentsList() {
     let table = getTable();
     let numberOfRows = getNumberOfRows();
     let avarageStudents = [];
-    let columnsSemester = getNumberColumns() - 4; // Isso deve ser ajustado para considerar o novo número de semestres
+    let columnsSemester = getNumberColumns() - 4;
 
     for (var i = 1; i < numberOfRows; i++) {
         let gradeStudent = 0;
 
         for (var n = 0; n < columnsSemester; n++) {
-            let j = 2 + n; // Isso deve ser ajustado para considerar o novo número de semestres
+            let j = 2 + n;
 
             let celulaInput = table.rows[i].cells[j].querySelector('input');
             let grade = celulaInput ? parseFloat(celulaInput.value) : 0;
@@ -35,7 +35,7 @@ function avarageStudentsList() {
             gradeStudent += grade;
             j++
         }
-        avarageStudents.push(gradeStudent / countSemesters); // Isso deve ser ajustado para usar o valor atualizado de countSemesters
+        avarageStudents.push(gradeStudent / countSemesters);
     }
 
     return avarageStudents;
@@ -182,17 +182,27 @@ function getNumberColumns() {
 document.getElementById('optionOrder').addEventListener('change', function(){
     let numberOfRows = getNumberOfRows();
     let table = getTable();
-    var nameStudentsList = [];
+    let nameStudentsList = [];
+    let rowsWithNames = [];
 
     for(let i = 1; i < numberOfRows; i++){
-        let celulaNameStudents = table.rows[i].cells[1].textContent;
+        let celulaNameStudents = table.rows[i].cells[1].querySelector('input').value;
         nameStudentsList.push(celulaNameStudents);
+        rowsWithNames.push({name: celulaNameStudents, row: table.rows[i]});
     }
-
+    
     nameStudentsList.sort(function(a, b) {
-     return a.localeCompare(b);
+        return a.localeCompare(b);
     });
     
-    console.log(nameStudentsList);
+    rowsWithNames.sort(function(a, b) {
+        return nameStudentsList.indexOf(a.name) - nameStudentsList.indexOf(b.name);
+    });
+    
+    let tbody = document.getElementsByTagName('tbody')[0];
+    tbody.innerHTML = '';
+    rowsWithNames.forEach(function(item) {
+        tbody.appendChild(item.row);
+    });
 
 })
