@@ -206,3 +206,7 @@ document.getElementById('optionOrder').addEventListener('change', function(){
     });
 
 })
+
+function removeStudent(){
+    document.getElementsByTagName('tr').remove();
+}
