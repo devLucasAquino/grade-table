@@ -180,6 +180,7 @@ function getNumberColumns() {
 }
 
 document.getElementById('optionOrder').addEventListener('change', function(){
+    
     let numberOfRows = getNumberOfRows();
     let table = getTable();
     let nameStudentsList = [];
@@ -209,4 +210,8 @@ document.getElementById('optionOrder').addEventListener('change', function(){
 
 function removeStudent(){
     document.getElementsByTagName('tr').remove();
+}
+
+function removeGrade(){
+    
 }
